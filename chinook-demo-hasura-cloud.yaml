@@ -1,0 +1,88 @@
+name: Kitchen Sink Chinook Demo
+desc: Multi-HGE demo representing a more complex deployment
+configRootURI: https://raw.githubusercontent.com/chris-hasura/chinook-demo/main
+engines:
+  - name: hr
+    desc: 
+    hgeURL: https://<replace with hr project name>.hasura.app
+    hgeAdminSecret: <replace with hr admin secret>
+    metadata: 
+      uri: metadata/hr-metadata.json
+      overrides:
+        - find: $.metadata.sources[?(@.name=='default')].configuration.connection_info.database_url
+          replaceWith: <replace with corp db connection string>
+    dataSourceInits:
+      - metadataDataSourceName: default
+        fileURI: data-init/hr.sql
+  - name: crm
+    desc: 
+    hgeURL: https://<replace with crm project name>.hasura.app
+    hgeAdminSecret: <replace with crm admin secret>
+    metadata:
+      uri: metadata/crm-metadata.json
+      overrides:
+        - find: $.metadata.sources[?(@.name=='default')].configuration.connection_info.database_url
+          replaceWith: <replace with corp db connection string>
+    dataSourceInits:
+      - metadataDataSourceName: default
+        fileURI: data-init/crm.sql
+  - name: orders
+    desc: 
+    hgeURL: https://<replace with orders project name>.hasura.app
+    hgeAdminSecret: <replace with orders admin secret>
+    metadata:
+      uri: metadata/orders-metadata.json
+      overrides:
+        - find: $.metadata.sources[?(@.name=='default')].configuration.connection_info.database_url
+          replaceWith: <replace with corp db connection string>
+    dataSourceInits:
+      - metadataDataSourceName: default
+        fileURI: data-init/orders.sql
+  - name: main
+    desc: 
+    hgeURL: https://<replace with main project name>.hasura.app
+    hgeAdminSecret: <replace with main admin secret>
+    metadata:
+      uri: metadata/main-metadata.json
+      overrides:
+        - find: $.metadata.sources[?(@.name=='music')].configuration.connection_info.database_url
+          replaceWith: <replace with music db connection string>
+        - find: $.metadata.sources[?(@.name=='playlist')].configuration.connection_info.database_url
+          replaceWith: <replace with playlist db connection string>
+        - find: $.metadata.remote_schemas[?(@.name=='crm')].definition.url
+          replaceWith: https://<replace with crm project name>.hasura.app/v1/graphql
+        - find: $.metadata.remote_schemas[?(@.name=='crm')].definition.headers[?(@.name=='x-hasura-admin-secret')].value
+          replaceWith: <replace with crm admin secret>
+        - find: $.metadata.remote_schemas[?(@.name=='orders')].definition.url
+          replaceWith: https://<replace with orders project name>.hasura.app/v1/graphql
+        - find: $.metadata.remote_schemas[?(@.name=='orders')].definition.headers[?(@.name=='x-hasura-admin-secret')].value
+          replaceWith: <replace with orders admin secret>
+        - find: $.metadata.actions[?(@.name=='delete_employees_by_pk')].definition.handler
+          replaceWith: https://<replace with hr project name>.hasura.app/api/rest/employees
+        - find: $.metadata.actions[?(@.name=='delete_employees_by_pk')].definition.headers[?(@.name=='x-hasura-admin-secret')].value
+          replaceWith: <replace with hr admin secret>
+        - find: $.metadata.actions[?(@.name=='employees')].definition.handler
+          replaceWith: https://<replace with hr project name>.hasura.app/api/rest/employees
+        - find: $.metadata.actions[?(@.name=='employees')].definition.headers[?(@.name=='x-hasura-admin-secret')].value
+          replaceWith: <replace with hr admin secret>
+        - find: $.metadata.actions[?(@.name=='employeesFlattened')].definition.handler
+          replaceWith: https://<replace with hr project name>.hasura.app/api/rest/employees
+        - find: $.metadata.actions[?(@.name=='employeesFlattened')].definition.headers[?(@.name=='x-hasura-admin-secret')].value
+          replaceWith: <replace with hr admin secret>
+        - find: $.metadata.actions[?(@.name=='employees_by_pk')].definition.handler
+          replaceWith: https://<replace with hr project name>.hasura.app/api/rest/employees
+        - find: $.metadata.actions[?(@.name=='employees_by_pk')].definition.headers[?(@.name=='x-hasura-admin-secret')].value
+          replaceWith: <replace with hr admin secret>
+        - find: $.metadata.actions[?(@.name=='insert_employees_one')].definition.handler
+          replaceWith: https://<replace with hr project name>.hasura.app/api/rest/employees
+        - find: $.metadata.actions[?(@.name=='insert_employees_one')].definition.headers[?(@.name=='x-hasura-admin-secret')].value
+          replaceWith: <replace with hr admin secret>
+        - find: $.metadata.actions[?(@.name=='update_employees_by_pk')].definition.handler
+          replaceWith: https://<replace with hr project name>.hasura.app/api/rest/employees
+        - find: $.metadata.actions[?(@.name=='update_employees_by_pk')].definition.headers[?(@.name=='x-hasura-admin-secret')].value
+          replaceWith: <replace with hr admin secret>
+    dataSourceInits:
+      - metadataDataSourceName: music
+        fileURI: data-init/music.sql
+      - metadataDataSourceName: playlist
+        fileURI: data-init/playlist.sql

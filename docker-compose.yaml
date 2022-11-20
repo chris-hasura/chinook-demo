@@ -148,7 +148,7 @@ services:
       HASURA_GRAPHQL_EXPERIMENTAL_FEATURES: streaming_subscriptions
       HASURA_GRAPHQL_CONSOLE_ASSETS_DIR: /srv/console-assets
 
-      SENDGRID_API_KEY_HEADER: Bearer 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
+      SENDGRID_API_KEY_HEADER: Bearer <replace with API key>
     healthcheck:
       test: bash -c ':> /dev/tcp/0.0.0.0/8080' || exit 1
       interval: 5s

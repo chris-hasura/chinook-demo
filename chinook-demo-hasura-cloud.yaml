@@ -1,5 +1,5 @@
-name: Kitchen Sink Chinook Demo
-desc: Multi-HGE demo representing a more complex deployment
+name: Kitchen Sink Chinook Demo hosted on Hasura Cloud
+desc: Multi-HGE demo representing a more complex deployment with the Hasura GraphQL engines (and metadata DBs) hosted on Hasura Cloud and the data hosted from a cloud-accessible location
 configRootURI: https://raw.githubusercontent.com/chris-hasura/chinook-demo/main
 engines:
   - name: hr
